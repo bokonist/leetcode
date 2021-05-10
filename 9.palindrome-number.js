@@ -12,33 +12,28 @@
 var isPalindrome = function (x) {
   if (x < 0) return false;
   if (x === 0) return true;
-  else {
-    let i = x,
-      arr = [];
-    while (i > 0) {
-      arr.unshift(i % 10);
-      i = Math.floor(i / 10);
+  let i = x,
+    arr = [];
+  while (i > 0) {
+    arr.unshift(i % 10);
+    i = Math.floor(i / 10);
+  }
+  let pointer = 0;
+  let length = arr.length;
+  while (true) {
+    if (pointer === length - 1 - pointer) {
+      //middle element
+      return true;
     }
-    let pointer = 0;
-    let condition = true;
-    let result = false;
-    let length = arr.length;
-    while (condition) {
-      if (pointer === length - 1 - pointer) {
-        //middle element
-        return true;
-      }
-      if (pointer === length - 1 - pointer - 1) {
-        //middle 2 elements
-        if (arr[pointer] === arr[pointer + 1]) return true;
-      }
-      if (arr[pointer] === arr[length - 1 - pointer]) {
-        pointer++;
-        continue;
-      }
-      return false;
+    if (pointer === length - 1 - pointer - 1) {
+      //middle 2 elements
+      if (arr[pointer] === arr[pointer + 1]) return true;
     }
-    return result;
+    if (arr[pointer] === arr[length - 1 - pointer]) {
+      pointer++;
+      continue;
+    }
+    return false;
   }
 };
 // @lc code=end
