@@ -19,27 +19,21 @@ function numSort(a, b) {
 var findContentChildren = function (g, s) {
   g.sort(numSort);
   s.sort(numSort);
-  let satisfied = 0,
-    cookieFound = -1;
-  while (g.length > 0) {
-    for (let i = 0; i < s.length; i++) {
-      if (g[0] <= s[i]) {
-        //found cookie at i
-        cookieFound = i;
-        break;
-      }
-    }
-    //check if g[0] has a  cookie big enough in s[i]
-    //if yes, increase satisified, discard cookie, discard child,
-    //if no, discard child who is too greedy
-    if (cookieFound >= 0) {
+  let satisfied = 0, //also functions as gPointer
+    cookieFound = -1,
+    sPointer = 0;
+  while (sPointer < s.length) {
+    //check if g[satisified] has a  cookie big enough in s[i]
+
+    //if yes discard cookie, discard child,
+    if (g[satisfied] <= s[sPointer]) {
+      //found cookie
       satisfied++;
-      s.splice(cookieFound, 1);
-      g.shift();
-      cookieFound = -1;
+      sPointer++;
     } else {
-      //no cookie found
-      g.shift();
+      //these small cookies are too small to satify anyone
+      //so we discard them as to not keep checking them again
+      sPointer++;
     }
   }
 
