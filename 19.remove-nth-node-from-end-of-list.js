@@ -17,22 +17,33 @@
  * @param {number} n
  * @return {ListNode}
  */
+
 var removeNthFromEnd = function (head, n) {
   let mainHead = head;
-  let prevNodes = [],
-    length = 0;
-  while (head) {
-    prevNodes.push(head);
-    length++;
+  let headPointer = head;
+  let tailPointer = head;
+  let headStart = n;
+  while (head.next) {
+    headPointer = headPointer.next;
+    headStart--;
+    if (headStart < 0) {
+      tailPointer = tailPointer.next;
+    }
     head = head.next;
   }
-  let prevIndex = length - n - 1;
-  if (prevIndex < 0) {
-    mainHead = mainHead.next;
-    return mainHead;
+  if (headPointer === tailPointer) {
+    //only 1 element or 0elements
+    return null;
+  } else if (tailPointer === mainHead) {
+    //n is greater or equal to list size
+    if (headStart > 0) {
+      ///tail pointer is still trailing behind first index so remove first element
+      mainHead = mainHead.next;
+      return mainHead;
+    }
   }
-  prevNodes[prevIndex].next = prevNodes[prevIndex].next.next;
-  return prevNodes[0];
+  tailPointer.next = tailPointer.next.next;
+  return mainHead;
 };
 
 //[1,2,3,4,5]\n2
